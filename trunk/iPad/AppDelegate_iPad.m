@@ -36,8 +36,8 @@
 	
 	int fWidth = rect.size.width;
 	int fHeight = rect.size.height - toolbar.bounds.size.height;
-	int w = fWidth / 10 + 1;
-	int h = fHeight / 10 + 1;
+	int w = fWidth / 15 + 1;
+	int h = fHeight / 15 + 1;
 	
 	started = NO;
 	
@@ -97,12 +97,17 @@
 }
 
 - (void)cellClickedAtX: (int)x Y: (int)y {
-	[lifeController setLifeAtCellWithX:x Y:y];
+	if (!started)
+		[lifeController setLifeAtCellWithX:x Y:y];
 }
 
 - (void)onTimer: (NSTimer *) timer {
 	if (started)
+	{
+		[btnGeneration setTitle:[NSString stringWithFormat:@"Generation %d", gen]];
 		[lifeController step];
+		gen++;
+	}
 }
 
 - (void)start {
@@ -123,6 +128,7 @@
 
 - (void)clear {
 	NSLog(@"clear!");
+	gen = 0;
 	[lifeController clearField];
 }
 

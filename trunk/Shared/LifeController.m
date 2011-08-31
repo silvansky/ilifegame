@@ -32,9 +32,9 @@
 	_height = height;
 	self = [super init];
 	if (self) {
-		int ** newField = malloc(sizeof(int) * width);
-		for (int i = 0; i < width; i++) {
-			newField[i] = malloc(sizeof(int) * height);
+		int ** newField = malloc(sizeof(int) * _width);
+		for (int i = 0; i < _width; i++) {
+			newField[i] = malloc(sizeof(int) * _height);
 			for (int j = 0; j < _height; j++)
 				newField[i][j] = 0;
 		}
@@ -116,9 +116,13 @@
 		n7y = 0;
 	if (n8y == _height)
 		n8y = 0;
-	
+		
+	int n = field[n1x][n1y] + field[n2x][n2y] + field[n3x][n3y] + 
+			field[n4x][n4y] + field[n5x][n5y] + 
+			field[n6x][n6y] + field[n7x][n7y] + field[n8x][n8y];
 	if (x == 0 && y == 0)
-		NSLog([NSString stringWithFormat:@"coords:\n%d %d | %d %d | %d %d\n%d %d | %d %d | %d %d\n%d %d | %d %d | %d %d",
+		NSLog([NSString stringWithFormat:@"neighbours: %d, coords:\n%d %d | %d %d | %d %d\n%d %d | %d %d | %d %d\n%d %d | %d %d | %d %d",
+			   n,
 			   n1x, n1y,
 			   n2x, n2y,
 			   n3x, n3y,
@@ -128,10 +132,7 @@
 			   n6x, n6y,
 			   n7x, n7y,
 			   n8x, n8y]);
-	
-	return  field[n1x][n1y] + field[n2x][n2y] + field[n3x][n3y] + 
-			field[n4x][n4y] + field[n5x][n5y] + 
-			field[n6x][n6y] + field[n7x][n7y] + field[n8x][n8y];
+	return n;
 }
 
 - (void)step {
@@ -152,6 +153,7 @@
 				if (n == 3)
 					newCell = 1;
 			}
+			newField[i][j] = newCell;
 		}
 	}
 	[self setField:newField];
