@@ -13,12 +13,12 @@
 @synthesize delegate;
 
 - (id)initWithFrame:(CGRect)frame {
-    
     self = [super initWithFrame:frame];
     if (self) {
 		f = 0;
 		w = 0;
 		h = 0;
+		[self setMultipleTouchEnabled:YES];
     }
     return self;
 }
@@ -34,7 +34,7 @@
 	[[UIColor blackColor] set];
 	UIRectFrame(myFrame);
 	CGFloat cellWidth = myFrame.size.width / (float)w;
-	CGFloat cellHeight = myFrame.size.width / (float)h;
+	CGFloat cellHeight = myFrame.size.height / (float)h;
 	for (int i = 0; i < w; i++) {
 		for (int j = 0; j < h; j++) {
 			CGRect cellRect = CGRectMake(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
@@ -57,6 +57,19 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	for (UITouch * touch in touches) {
+		CGPoint p = [touch locationInView:self];
+		CGRect myFrame = self.bounds;
+		CGFloat cellWidth = myFrame.size.width / (float)w;
+		CGFloat cellHeight = myFrame.size.height / (float)h;
+		int x = (int)(p.x / cellWidth);
+		int y = (int)(p.y / cellHeight);
+		[delegate cellClickedAtX:x Y:y];
+	}
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+	[self touchesBegan:touches withEvent:event];
 }
 
 @end

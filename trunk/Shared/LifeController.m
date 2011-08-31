@@ -36,7 +36,7 @@
 		for (int i = 0; i < width; i++) {
 			newField[i] = malloc(sizeof(int) * height);
 			for (int j = 0; j < _height; j++)
-				field[i][j] = 0;
+				newField[i][j] = 0;
 		}
 		[self setField: newField];
 	}
@@ -53,7 +53,24 @@
 	[delegate updateField:field];
 }
 
+- (void)setLifeAtCellWithX: (int)x Y: (int)y {
+	field[x][y] = 1;
+	[delegate updateField:field];
+}
+
 - (int)numberOfNeighborsOfX: (int)x Y: (int)y {
+/*
+ 
+ +-+-+-+
+ |1|2|3|
+ +-+-+-+
+ |4|x|5|
+ +-+-+-+
+ |6|7|8|
+ +-+-+-+
+ 
+ */
+	
 	// counting alive ones from eight neighburs
 	int n1x, n1y,
 		n2x, n2y,
@@ -99,6 +116,18 @@
 		n7y = 0;
 	if (n8y == _height)
 		n8y = 0;
+	
+	if (x == 0 && y == 0)
+		NSLog([NSString stringWithFormat:@"coords:\n%d %d | %d %d | %d %d\n%d %d | %d %d | %d %d\n%d %d | %d %d | %d %d",
+			   n1x, n1y,
+			   n2x, n2y,
+			   n3x, n3y,
+			   n4x, n4y,
+			   x, y,
+			   n5x, n5y,
+			   n6x, n6y,
+			   n7x, n7y,
+			   n8x, n8y]);
 	
 	return  field[n1x][n1y] + field[n2x][n2y] + field[n3x][n3y] + 
 			field[n4x][n4y] + field[n5x][n5y] + 

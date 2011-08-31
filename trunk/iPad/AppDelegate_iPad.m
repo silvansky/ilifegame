@@ -48,7 +48,7 @@
 	[self.window makeKeyAndVisible];
 	[lifeController step];
 	
-	_timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
+	_timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
     
 	return YES;
 }
@@ -97,7 +97,7 @@
 }
 
 - (void)cellClickedAtX: (int)x Y: (int)y {
-	[lifeController invertCellWithX:x Y:y];
+	[lifeController setLifeAtCellWithX:x Y:y];
 }
 
 - (void)onTimer: (NSTimer *) timer {
