@@ -23,6 +23,7 @@
 
 - (id)initWithWidth: (int)width Height: (int)height;
 - (void)invertCellWithX: (int)x Y: (int)y;
+- (void)setLifeAtCellWithX: (int)x Y: (int)y;
 - (void)step;
 - (BOOL)lifeAtX: (int)x Y: (int)y;
 - (void)clearField;
