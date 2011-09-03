@@ -19,6 +19,7 @@
 	UIBarButtonItem *btnClear;
 	UIBarButtonItem *btnGeneration;
 	UIToolbar *toolbar;
+	UISlider *slider;
 	LifeController *lifeController;
 	LifeView *lifeView;
 	NSTimer *_timer;
@@ -32,6 +33,7 @@
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *btnClear;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *btnGeneration;
 @property (nonatomic, retain) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, retain) IBOutlet UISlider *slider;
 @property (nonatomic, retain) IBOutlet LifeView *lifeView;
 
 - (void)updateField: (int **) field;
@@ -40,5 +42,6 @@
 - (void)start;
 - (void)stop;
 - (void)clear;
+- (IBAction)sliderValueChanged:(id)sender;
 
 @end

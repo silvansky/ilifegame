@@ -10,12 +10,17 @@
 
 @implementation AppDelegate_iPad
 
-@synthesize window, toolbar, lifeView;
+@synthesize window, toolbar, lifeView, slider;
 @synthesize btnStart, btnStop, btnClear, btnGeneration;
 
 
 #pragma mark -
 #pragma mark Application lifecycle
+
+- (void)resetTimerWithInterval:(CGFloat)interval {
+	[_timer invalidate];
+	_timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
@@ -36,8 +41,8 @@
 	
 	int fWidth = rect.size.width;
 	int fHeight = rect.size.height - toolbar.bounds.size.height;
-	int w = fWidth / 15 + 1;
-	int h = fHeight / 15 + 1;
+	int w = fWidth / 26 + 1;
+	int h = fHeight / 26 + 1;
 	
 	started = NO;
 	
@@ -48,7 +53,7 @@
 	[self.window makeKeyAndVisible];
 	[lifeController step];
 	
-	_timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
+	[self resetTimerWithInterval:1.05 - slider.value];
     
 	return YES;
 }
@@ -104,7 +109,7 @@
 - (void)onTimer: (NSTimer *) timer {
 	if (started)
 	{
-		[btnGeneration setTitle:[NSString stringWithFormat:@"Generation %d", gen]];
+		[btnGeneration setTitle:[NSString stringWithFormat:@"Generation: %d", gen]];
 		[lifeController step];
 		gen++;
 	}
@@ -129,7 +134,14 @@
 - (void)clear {
 	NSLog(@"clear!");
 	gen = 0;
+	[btnGeneration setTitle:[NSString stringWithFormat:@"Generation: %d", gen]];
 	[lifeController clearField];
+}
+
+- (IBAction)sliderValueChanged:(id)sender {
+	if (sender == slider) {
+		[self resetTimerWithInterval:1.05 - slider.value];
+	}
 }
 
 @end
