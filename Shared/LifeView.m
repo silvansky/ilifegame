@@ -40,7 +40,10 @@
 			CGRect cellRect = CGRectMake(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
 			if (f[i][j]) {
 				// draw rect
+				[[UIColor redColor] set];
 				UIRectFill(cellRect);
+				[[UIColor blackColor] set];
+				UIRectFrame(cellRect);
 			} else {
 				// draw frame
 				UIRectFrame(cellRect);
